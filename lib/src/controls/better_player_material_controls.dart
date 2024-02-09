@@ -721,20 +721,12 @@ class _BetterPlayerMaterialControlsState
     final remaining = duration - position;
     String formattedTotalDuration = BetterPlayerUtils.formatDuration(duration);
     String formattedRemainingDuration =
-        BetterPlayerUtils.formatDuration(remaining);
-
-    bool showTotalDuration = true;
+        "-" + BetterPlayerUtils.formatDuration(remaining);
 
     return Padding(
-      padding: _controlsConfiguration.enablePlayPause
-          ? const EdgeInsets.only(right: 24)
-          : const EdgeInsets.symmetric(horizontal: 22),
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            showTotalDuration = !showTotalDuration;
-          });
-        },
+        padding: _controlsConfiguration.enablePlayPause
+            ? const EdgeInsets.only(right: 24)
+            : const EdgeInsets.symmetric(horizontal: 22),
         child: RichText(
           text: TextSpan(
               text: BetterPlayerUtils.formatDuration(position),
@@ -746,7 +738,7 @@ class _BetterPlayerMaterialControlsState
               children: <TextSpan>[
                 TextSpan(
                   text:
-                      ' / ${showTotalDuration ? formattedTotalDuration : formattedRemainingDuration}',
+                      ' / ${_betterPlayerController!.betterPlayerControlsConfiguration.playerTimeMode == 1 ? formattedTotalDuration : formattedRemainingDuration}',
                   style: TextStyle(
                     fontSize:
                         _betterPlayerController!.isFullScreen ? 20.0 : 10.0,
@@ -755,9 +747,7 @@ class _BetterPlayerMaterialControlsState
                   ),
                 )
               ]),
-        ),
-      ),
-    );
+        ));
   }
 
   @override
